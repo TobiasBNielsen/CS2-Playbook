@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CS2 Powerliga Playbook</title>
+
+  <!-- Futuristiske fonte -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+    :root {
+      --bg-main: #030014;
+      --bg-panel: #070818;
+      --bg-panel-soft: rgba(7, 8, 24, 0.92);
+      --border-soft: #2e1065;
+      --accent: #a855ff;
+      --accent-soft: #8b5cf6;
+      --accent-cyan: #22d3ee;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --danger: #f97373;
+      --radius-lg: 18px;
+      --shadow-neon: 0 0 18px rgba(168, 85, 255, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at top left, #1f2937 0, transparent 55%),
+        radial-gradient(circle at bottom right, #111827 0, transparent 55%),
+        radial-gradient(circle at top right, rgba(168, 85, 255, 0.35) 0, transparent 60%),
+        #030014;
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* Header / “branding” */
+    header {
+      position: relative;
+      padding: 24px 16px 18px;
+      text-align: center;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.75));
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.95);
+      overflow: hidden;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0, rgba(168, 85, 255, 0.4), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(56, 189, 248, 0.25), transparent 55%);
+      opacity: 0.55;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    header h1 {
+      position: relative;
+      margin: 0;
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 28px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f9fafb;
+      text-shadow:
+        0 0 10px rgba(168, 85, 255, 0.75),
+        0 0 26px rgba(56, 189, 248, 0.35);
+      animation: glowPulse 2.4s ease-in-out infinite alternate;
+    }
+
+    header p {
+      position: relative;
+      margin: 8px 0 0;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(209, 213, 219, 0.75);
+    }
+
+    @keyframes glowPulse {
+      0% {
+        text-shadow:
+          0 0 8px rgba(168, 85, 255, 0.6),
+          0 0 18px rgba(56, 189, 248, 0.25);
+      }
+      100% {
+        text-shadow:
+          0 0 16px rgba(168, 85, 255, 0.9),
+          0 0 32px rgba(56, 189, 248, 0.55);
+      }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 22px auto 32px;
+      padding: 0 16px 32px;
+    }
+
+    /* Top navigation – map chips */
+    nav.top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(3, 7, 18, 0.96), rgba(3, 7, 18, 0.88));
+      border-bottom: 1px solid rgba(55, 65, 81, 0.7);
+      padding: 10px 14px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.85),
+        0 0 26px rgba(15, 23, 42, 0.9);
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      text-decoration: none;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(209, 213, 219, 0.82);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.85));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition:
+        background 0.18s ease-out,
+        border-color 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        transform 0.15s ease-out,
+        color 0.18s ease-out;
+    }
+
+    .nav-link::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.85);
+      box-shadow: 0 0 8px rgba(148, 163, 184, 0.9);
+      transition: background 0.18s ease-out, box-shadow 0.18s ease-out;
+    }
+
+    .nav-link:hover {
+      border-color: rgba(168, 85, 255, 0.9);
+      color: #e5e7eb;
+      transform: translateY(-1px);
+      box-shadow: 0 0 14px rgba(168, 85, 255, 0.75);
+      background: radial-gradient(circle at top left, #111827, #020617);
+    }
+
+    .nav-link:hover::before {
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(168, 85, 255, 1);
+    }
+
+    .nav-link.active {
+      border-color: var(--accent);
+      color: #f9fafb;
+      box-shadow:
+        0 0 18px rgba(168, 85, 255, 0.9),
+        0 0 30px rgba(56, 189, 248, 0.45);
+      background: radial-gradient(circle at top left, #4c1d95, #020617);
+    }
+
+    .nav-link.active::before {
+      background: var(--accent-cyan);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 1);
+    }
+
+    /* Hero / landing kort */
+    #landing {
+      margin: 26px 0 18px;
+      padding: 18px 18px 16px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.93), rgba(15, 23, 42, 0.85));
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      box-shadow:
+        0 0 18px rgba(15, 23, 42, 0.9),
+        0 0 32px rgba(15, 23, 42, 0.95);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    #landing::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(168, 85, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.25), transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    #landing h2 {
+      position: relative;
+      margin: 0 0 4px;
+      font-size: 17px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #e5e7eb;
+    }
+
+    #landing p {
+      position: relative;
+      margin: 6px 0 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    #landing .hint {
+      position: relative;
+      margin-top: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(156, 163, 175, 0.95);
+    }
+
+    #landing .hint span {
+      color: var(--accent-soft);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Map sektioner */
+    .map-section {
+      background: var(--bg-panel-soft);
+      margin-bottom: 18px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      padding: 18px 18px 14px;
+      box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.85),
+        0 0 24px rgba(15, 23, 42, 0.95);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.35s ease-out;
+    }
+
+    .map-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(168, 85, 255, 0.16), transparent 50%),
+        radial-gradient(circle at 120% 0, rgba(56, 189, 248, 0.18), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    .map-title {
+      position: relative;
+      font-family: 'Orbitron', system-ui, sans-serif;
+      font-size: 20px;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .map-title::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-cyan), var(--accent));
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.85);
+    }
+
+    /* Details / accordions */
+    details {
+      position: relative;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.94), rgba(3, 7, 18, 0.95));
+      margin-top: 10px;
+      border-radius: 14px;
+      padding: 10px 12px 10px;
+      border: 1px solid rgba(55, 65, 81, 0.7);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.88);
+      transition:
+        border-color 0.22s ease-out,
+        box-shadow 0.22s ease-out,
+        transform 0.16s ease-out,
+        background 0.22s ease-out;
+      overflow: hidden;
+    }
+
+    details:hover {
+      border-color: rgba(168, 85, 255, 0.7);
+      box-shadow:
+        0 0 14px rgba(168, 85, 255, 0.55),
+        0 0 18px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+      background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.9), rgba(3, 7, 18, 0.95));
+    }
+
+    details[open] {
+      border-color: var(--accent);
+      box-shadow:
+        0 0 18px rgba(168, 85, 255, 0.9),
+        0 0 26px rgba(15, 23, 42, 0.9);
+      transform: translateY(-1px);
+    }
+
+    summary {
+      position: relative;
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      font-size: 15px;
+      font-weight: 600;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "▸";
+      font-size: 12px;
+      margin-left: 10px;
+      color: var(--accent-cyan);
+      transition: transform 0.2s ease-out, color 0.2s ease-out;
+    }
+
+    details[open] > summary::after {
+      transform: rotate(90deg);
+      color: var(--accent);
+    }
+
+    p, li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-main);
+      position: relative;
+    }
+
+    details > p {
+      margin-top: 8px;
+      color: var(--text-muted);
+    }
+
+    strong {
+      color: #e5e7eb;
+    }
+
+    /* Extra-sektioner */
+    .extra-section {
+      margin-top: 6px;
+    }
+
+    /* Scrollbar – lidt pænere */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent), var(--accent-cyan));
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #c4b5fd, var(--accent-cyan));
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CS2 Powerliga Playbook</h1>
+    <p>Anchor · Lurker · Utility · Mid-Round · Matchday Protocols</p>
+  </header>
+
+  <nav class="top-nav">
+    <a href="#Ancient" class="nav-link" data-target="Ancient" onclick="showSection('Ancient');return false;">Ancient</a>
+    <a href="#Inferno" class="nav-link" data-target="Inferno" onclick="showSection('Inferno');return false;">Inferno</a>
+    <a href="#Nuke" class="nav-link" data-target="Nuke" onclick="showSection('Nuke');return false;">Nuke</a>
+    <a href="#Train" class="nav-link" data-target="Train" onclick="showSection('Train');return false;">Train</a>
+    <a href="#Mirage" class="nav-link" data-target="Mirage" onclick="showSection('Mirage');return false;">Mirage</a>
+    <a href="#Dust2" class="nav-link" data-target="Dust2" onclick="showSection('Dust2');return false;">Dust II</a>
+    <a href="#Overpass" class="nav-link" data-target="Overpass" onclick="showSection('Overpass');return false;">Overpass</a>
+    <a href="#Extras" class="nav-link" data-target="Extras" onclick="showSection('Extras');return false;">Extras</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- Landing / forsiden -->
+    <div id="landing">
+      <h2>Team Playbook Interface Online</h2>
+      <p>
+        Vælg et <strong>map</strong> eller <strong>Extras</strong> i toppen for at åbne din playbook.
+        Alle sektioner er skjult indtil du vælger noget – så du kan fokusere 100% på én ting ad gangen.
+      </p>
+      <p class="hint">
+        TIP: <span>Anchor</span> først · <span>Lurker</span> bagefter · slut med <span>Matchday Protocols</span>
+      </p>
+    </div>
+
+    <!-- ANCIENT SECTION -->
+    <div class="map-section" id="Ancient" style="display:none">
+      <details style="display:block"><summary class="map-title">Ancient</summary>
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> B Site (Pillar/Backsite), A Site (Temple/Donut).
+          <br><br>
+          <strong>Gameplan:</strong><br>
+          • Brug molotov tidligt til at stoppe rush i Cave eller A Main.<br>
+          • Hold dig i live – at dø som første mand taber site.<br>
+          • Call tydelig info: antal, utility, om de kan være close, og om du spiller retake.<br>
+          <br>
+          <strong>Defensive Setup (B):</strong><br>
+          • Start med HE på Cave spam-spot.<br>
+          • Molo Cave ved 1:42 hvis der er pres.<br>
+          • Falder til Backsite når smokes kommer – spil tid, ikke duel.<br>
+          <br>
+          <strong>Defensive Setup (A):</strong><br>
+          • Start i Donut og lyt efter steps i Mid/A Main.<br>
+          • Molo A Main chokepoint og fald tilbage til Temple.<br>
+          • Call rotation tidligt – Ancient rotations er lange.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Mid control → Donut → A split timing.<br>
+          • B Lurk → Hold Cave push og punish CT aggression.<br>
+          • Late Donut flank når team exec’er A.<br>
+          <br>
+          <strong>Timing Windows:</strong><br>
+          • Når CT bruger deres anden smoke i Cave/A Main.<br>
+          • Når dit hold presser modsat site.<br>
+          • Når CT går efter info i Mid (meget almindeligt i 4. div).
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Cut rotations mellem A ↔ B.<br>
+          • Sikre Donut mid-round – det bestemmer hele maps flow.<br>
+          • Afstraffe CT der pusher Cave/Donut/Mid.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Site Exec Utilities:</strong><br>
+          • A Main Smoke (blokker CT og giver frit entry).<br>
+          • Temple Smoke for retake denial.<br>
+          • Donut Smoke for at isolere CT.<br>
+          • Molo Under Heaven før plant.
+          <br><br>
+          <strong>B Site Exec Utilities:</strong><br>
+          • Cave Smoke (must-throw).<br>
+          • Backsite Smoke for safe plant.<br>
+          • Molo Double for at forhindre crossfires.<br>
+          • Flash over høje væg mod pillar.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>Standard T Plan:</strong><br>
+          1. Tag Mid control (vigtigste del af Ancient).<br>
+          2. Pres Cave + Donut samtidig.<br>
+          3. Afhængigt af info → split A eller slow B.
+          <br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Hold liv i anchors og brug rotater aggressivt.<br>
+          • Donut-spilleren må ikke dø tidligt.<br>
+          • Re-aggress ikke Cave alene – tag flash fra teammate.
+          </p>
+        </details>
+      </details>
+    </div>
+
+    <!-- INFERNO -->
+    <div class="map-section" id="Inferno" style="display:none">
+      <details style="display:block"><summary class="map-title">Inferno</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> B Site (New Box, Coffins), A Site (Pit, Site).<br><br>
+          <strong>B Anchor (Banana):</strong><br>
+          • Start altid med anti-rush utility: molo + HE deep banana.<br>
+          • Hvis T’erne tager kontrol, fald tilbage til Coffins/New Box og spil tid.<br>
+          • Call tydeligt hvornår du falder – rotations tager lang tid.<br><br>
+          <strong>A Anchor:</strong><br>
+          • Pit er din stærkeste position – spil til cover + multi-kill potential.<br>
+          • Brug molo på short push eller apps drop for at stoppe exec tempo.<br>
+          • Overlev → A-retake er stærkt hvis du lever.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Apps lurk → punish CT der re-aggressor short/pit.<br>
+          • Banana slow lurk → catch rotater efter fake A exec.<br>
+          • Mid control lurk → sen timing gennem long/arch.<br><br>
+          <strong>Timing Windows:</strong><br>
+          • Efter CT smider deres anden banana smoke (ca. 1:05).<br>
+          • Når holdet arbejder i apps → arch spilleren roterer ofte for tidligt.<br>
+          • Når CT laver “banana retake” → free timings mid/apps.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Moto Smoke (blokker long + moto crossfire).<br>
+          • Arch Smoke for at isolere rotater.<br>
+          • Pit Molo → fjerner CT's stærkeste anchor spot.<br>
+          • Flash over short → perfekt for entry.<br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Coffins Smoke + CT Smoke for double isolation.<br>
+          • New Box Molo før plant.<br>
+          • Deep banana flash der blind’er hele site.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Tag banana kontrol eller apps kontrol – du skal have én af dem.<br>
+          2. Brug lurker til at manipulere rotations.<br>
+          3. Exec hurtigere end rotations kan følge med (Inferno rotations er lange).<br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Rotate kun efter sikker info → Inferno straffer overrotations hårdt.<br>
+          • Behold utility til 40-sekunders mark (A får ofte late execs).<br>
+          • Tag banana info med flashes → ikke dry-peeks.
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- NUKE -->
+    <div class="map-section" id="Nuke" style="display:none">
+      <details style="display:block"><summary class="map-title">Nuke</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> A Site (Hut, Rafters), B Site (Dark, Double Doors), Outside (Garage hold).<br><br>
+          <strong>A Anchor:</strong><br>
+          • Hold Hut og Squeaky i live – din overlevelse bestemmer om site falder.<br>
+          • Start med molo Squeaky for at stoppe fast vent drop timing.<br>
+          • Brug rafters til safe crossfires → spil ikke for bredt.<br><br>
+          <strong>B Anchor:</strong><br>
+          • Dark er din power spot – brug det til at stalle tid ved exec.<br>
+          • Call tydeligt om T’er er nede ramp eller vent.<br>
+          • Brug smoke-mod-krydset ved doors for at skabe tid til rotators.<br><br>
+          <strong>Outside Anchor:</strong><br>
+          • Info er vigtigere end kills → call hvor mange krydser red.
+          • Falder du tilbage til Garage/Main, så lev længe og bliv ikke isoleret.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Outside → Secret timing når CT kaster anden molo.
+          • Hut lurk i A execs → punish rotation fra rafters.
+          • Ramp slow lurk efter A fake → catch rotater.
+          <br><br>
+          <strong>Timing Windows:</strong><br>
+          • Når CT har brugt deres anden outside smoke (ca. 1:20).
+          • Når Ramp spilleren falder ned tidligt → gratis map kontrol.
+          • Når A anchor smider molo nr. 2 → mulighed for vent lurk.
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Cut rotations mellem ramp ↔ B.
+          • Tag Secret kontrol for at underminere A anchoring.
+          • Straf outside re-aggro → meget normalt i 4. div.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Hut smoke → isolerer rifler på floor.
+          • Heaven smoke → blokerer AWP og rotations.
+          • Molly Rafters → tvinger anchor ned.
+          • Molly Squeaky → sikre entry.
+          <br><br>
+          <strong>Outside Utilities:</strong><br>
+          • Red cross smokes (2 smoke lineup) → sikrer Secret adgang.
+          • Garage molo → anti-AWP.
+          <br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Double smoke doors + decon.
+          • Double molo site (Dark + Double).
+          • Flash high til plant.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Få outside info – Secret er hele maps identitet.<br>
+          2. Lurker arbejder outside/vents mens team truer Ramp eller A.<br>
+          3. Mid-round split → A eller B afhængigt af rotations.<br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Hold rotations fleksible: Ramp → B, A → vents, Garage → Main.
+          • Giv ikke hut kontrol gratis – A falder uden dig.
+          • Brug utility kravfuldt: hold en molo til 35 sekunder.
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- TRAIN -->
+    <div class="map-section" id="Train" style="display:none">
+      <details style="display:block"><summary class="map-title">Train</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> A Site (Green, Hell, Sandwich), B Site (Oil, Upper Ramp).
+          <br><br>
+          <strong>A Anchor:</strong><br>
+          • Pas på early popdog-drops – call dem med det samme.<br>
+          • Spil Green/Hell for safest crossfires med rotators.<br>
+          • Brug early molo Pop for at stoppe fast hits.<br>
+          • Overlev → A retake er stærkt hvis du holder utility.
+          <br><br>
+          <strong>B Anchor:</strong><br>
+          • Start med molo Upper Ramp for at stoppe rush timings.<br>
+          • Falder til Oil når smoke rammer → spil tid og vent på rotate.<br>
+          • Hold info: hvor mange upper, om de kan være close lane, og om det er et fake.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Popdog hold → punish CT der re-aggressor ned i pop.<br>
+          • Ivy lurk → perfekt til at straffe rotater og skabe map split.<br>
+          • Late B ramp lurk efter A press → gratis timings.
+          <br><br>
+          <strong>Timing Windows:</strong><br>
+          • Når CT smider deres anden pop molo → free timing til tag pop.<br>
+          • Når A-spilleren re-aggressor sandwich/olof mid-round.<br>
+          • Efter fake A exec → B ramp spilleren roterer ofte for tidligt.
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Cut rotations mellem A ↔ B.<br>
+          • Ivy lurk bestemmer CT rotations tempo.<br>
+          • Pop control = map control.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Sandwich smoke → vigtig for entry pathing.<br>
+          • Hell smoke → isolerer AWP’en.<br>
+          • Green molo → fjerner crossfire på site.<br>
+          • Pop flash ud over A site → entry friendly.
+          <br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Lower lane smoke for safe plant.<br>
+          • Oil molo → fjerner anchor.<br>
+          • CT Connector smoke → stop retake instantly.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Tag pop eller ivy – du SKAL kontrollere ét af dem.<br>
+          2. Pres A med utility mens lurker arbejder B ramp/ivy.<br>
+          3. Split A via lane/hell eller exec B late round.
+          <br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Hold rotations tætte – Train straffer overrotations voldsomt.<br>
+          • Bevar pop kontrol – det er T’s største timing-vindue.<br>
+          • Spil A med crossfires fremfor solo duels.
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- MIRAGE -->
+    <div class="map-section" id="Mirage" style="display:none">
+      <details style="display:block"><summary class="map-title">Mirage</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> A Site (CT, Ticket, Under Balcony), B Site (Bench, Van, Backsite).
+          <br><br>
+          <strong>A Anchor:</strong><br>
+          • Start med molo A Ramp eller Palace afhængigt af spawns.<br>
+          • Tickethold er safest — fald tilbage tidligt når smokes kommer.<br>
+          • Call: om de kan være close, om det er contact play eller exec.<br>
+          • Overlev til retake — A-site retakes er meget stærke.
+          <br><br>
+          <strong>B Anchor:</strong><br>
+          • Molo apps early for at stoppe burst timings.<br>
+          • Hold info på short → call tidligt hvis du mister kontrol.<br>
+          • Fald til bench/backsite i execs og spil tid.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Under → Connector timing når holdet presser A.<br>
+          • B Apps slow lurk → punish CT pushes og rotations.<br>
+          • A Palace late lurk → perfekt i splits.<br>
+          <br><br>
+          <strong>Timing Windows:</strong><br>
+          • Efter CT kaster anden short smoke (typisk 1:10).<br>
+          • Når mid defender roterer mod A i early round.<br>
+          • Når B apps spilleren falder ned efter flash peek.
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Skabe pres i apps/under uden at over-pushe.<br>
+          • Cut rotations mid → jungle/connector er alt.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Stairs smoke → must have.<br>
+          • Jungle smoke → isolerer connector spiller.<br>
+          • CT smoke → deny AWP angles.<br>
+          • Molo under balk for at fjerne anchor.<br>
+          • Flash over top mid → hjælper palace/ramp entries.
+          <br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Van smoke + backsite smoke.
+          • Bench molo for at fjerne crossfire.
+          • Apps pop-flashes → free entry.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Tag mid → connector → jungle kontrol.
+          2. Brug lurker i under/apps til at skabe pres.
+          3. End enten A split eller B burst alt efter rotations.
+          <br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Re-aggress kun mid med flashes — aldrig alone dry peek.
+          • Hold en molo til rampe/palace 30-sek timing.
+          • Spil short anchor stærkt → det bestemmer mid kontrol.
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- DUST2 -->
+    <div class="map-section" id="Dust2" style="display:none">
+      <details style="display:block"><summary class="map-title">Dust II</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> A Site (Goose, Ramp, Long Corner), B Site (Back Plat, Car, Window).
+          <br><br>
+          <strong>A Anchor:</strong><br>
+          • Start med long control: HE + molo til at stoppe rush.<br>
+          • Ramp er safest ved execs — Goose kræver god timing og cover.
+          • Call tidligt om long er tabt → rotations er ekstremt vigtige.
+          <br><br>
+          <strong>B Anchor:</strong><br>
+          • Molo tunnels early for at stoppe burst timings.<br>
+          • Brug window til info, men peek aldrig bredt alene.
+          • Back plat er bedst til at spille tid i execs.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Upper tunnels → catch CT der re-aggressor i mid eller push B.
+          • Long slow lurk → punish CT der vil tage early control.
+          • Mid lurk → timing frem mod short når team presser long.
+          <br><br>
+          <strong>Timing Windows:</strong><br>
+          • Efter CT smider deres mid smoke anden gang.
+          • Når B anchor bruger sin molo i tunnels.
+          • Når long-spilleren falder tilbage til A-site.
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Skær rotations mellem A ↔ B.
+          • Skabe tvivl ved at holde tunnels og catwalk kontrollen.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Cross smokes (2-smoke lineup) — obligatorisk for at komme over.
+          • Goose molo → fjerner CT’s bedste off-angle.
+          • CT smoke → blokerer AWPer i rotate.
+          • Short flashes til entry.
+          <br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Window + double door smokes.
+          • Back plat molo.
+          • Flash over roof for entry.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Tag tunnels og short kontrol helst samtidig.
+          2. Lurker arbejder tunnels eller long.
+          3. Mid split → B er ekstremt stærkt mod eco/force.
+          <br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Hold mid info via cat eller short → dry peek aldrig mid.
+          • Rotate hurtigt hvis long tabes.
+          • Spar utility til 40-sek mark (short execs kommer ofte sent).
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- OVERPASS -->
+    <div class="map-section" id="Overpass" style="display:none">
+      <details style="display:block"><summary class="map-title">Overpass</summary>
+
+        <details style="display:block">
+          <summary>CT Anchor Guide</summary>
+          <p><strong>Primary Anchor Spots:</strong> A Site (Truck, Bank, Bathroom Cross), B Site (Pillar, Graffiti, Heaven).
+          <br><br>
+          <strong>A Anchor:</strong><br>
+          • Start med bathrooms molo + nade for at vinde tid og info.<br>
+          • Truck er safest i execs — brug cover og spil off-angles.<br>
+          • Bank er stærkt til retakes, men svagt mod rush → fald til site tidligt.
+          • Call tydeligt: om de kan være close bathrooms/long, og om du falder til site.
+          <br><br>
+          <strong>B Anchor:</strong><br>
+          • Molo short pipe i 1:45 for at deny rush.
+          • Brug pillar som defensivt main spot — svært at trade dig.
+          • Heaven er perfekt til at spille tid hvis teamet roterer.
+          • Smoke monster når du hører timing → køb 8-10 sekunder.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>T Lurker Guide</summary>
+          <p><strong>Lurker Routes:</strong><br>
+          • Connector lurk — straf CT info plays (meget almindeligt i 4. div).
+          • A long slow lurk — perfekt til at punish aggressive AWPs.
+          • Short pipe lurk — hold pushes og strafe rotate fra CT.
+          <br><br>
+          <strong>Timing Windows:</strong><br>
+          • Når CT tager toilets kontrol og vender rundt.
+          • Efter anden monster smoke (typisk 1:10).
+          • Når B anchor falder til graffiti efter pres.
+          <br><br>
+          <strong>Lurker Goals:</strong><br>
+          • Skab frygt i bathrooms + con → tving CT’s til at spille passivt.
+          • Cut rotations A ↔ B med short timings.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Utility Lineups</summary>
+          <p><strong>A Exec Utilities:</strong><br>
+          • Bank smoke.
+          • Truck smoke — isolerer A defender helt.
+          • Dumpster smoke (ved full exec).
+          • Bathroom molo → fjerner aggressive CT setups.
+          • Flash over A site for entry.
+          <br><br>
+          <strong>B Exec Utilities:</strong><br>
+          • Heaven smoke.
+          • CT smoke (mod graffiti walkway).
+          • Double molo pillar + backsite.
+          • Monster pop-flash → perfekt for entry.
+          </p>
+        </details>
+
+        <details style="display:block">
+          <summary>Mid-Round Plans</summary>
+          <p><strong>T Mid-Round:</strong><br>
+          1. Tag bathrooms + connector kontrol via default utility.
+          2. Lurker arbejder short/long afhængigt af CT utility usage.
+          3. Mid-round split: A via toilets/long eller B via short/monster.
+          <br><br>
+          <strong>CT Mid-Round:</strong><br>
+          • Spil aggressivt tidligt, passivt sent — spar utility til 40 sek.
+          • Rotate tidligt hvis toilets tabes helt.
+          • Hold Heaven-spilleren i live — han bestemmer B retake.
+          </p>
+        </details>
+
+      </details>
+    </div>
+
+    <!-- EXTRA SECTIONS -->
+    <div class="map-section" id="Extras" style="display:none">
+      <div class="extra-section" style="display: block">
+        <details style="display: block;"> 
+          <summary> Træningsrutine (Anchor & Lurker)</summary>
+          <details style="display:block">
+            <summary>Daglig Mekanisk Træning</summary>
+            <p>
+            • 15 min recoil + prefire (Aim Botz / workshop maps).<br>
+            • 10 min movement (strafing, peeks, jiggles).<br>
+            • 10 min spray-transfer (2 targets, 3 targets).<br>
+            • 15 min crosshair placement rundt på maps i offline mode.<br>
+            </p>
+          </details>
+          <details style="display:block">
+            <summary>Anchor-Specifik Træning</summary>
+            <p>
+            • 10 min “survival holds” per map → simulate execs og fald tilbage.<br>
+            • Træn molotov- og smoke-timings i 1:45, 1:20 og 0:40 windows.<br>
+            • Lær ét aggressivt og ét defensivt setup pr. map.<br>
+            </p>
+          </details>
+          <details style="display:block">
+            <summary>Lurker-Specifik Træning</summary>
+            <p>
+            • 20 min timing routes pr. map (under → con, ivy → mid, con → short osv.).<br>
+            • Hold push-control: træn anti-aggro setups alene.<br>
+            • Utility til at isolere duels (one-ways, anti-regression molos).<br>
+            </p>
+          </details>
+        </details>
+      </div>
+
+      <div class="extra-section"></div>
+      <details>
+        <summary> Demo Review Checklist</summary>
+
+        <details style="display:block">
+          <summary>Anchor Review</summary>
+          <p>
+          • Døde jeg for tidligt? Hvis ja, hvorfor?<br>
+          • Brugte jeg min utility correct → tidligt eller mid-round?<br>
+          • Gav jeg fuld info (antal, tempo, utility, om de kan være close)?<br>
+          • Var min positionering safe og optimal for at købe tid?<br>
+          • Faldt jeg tilbage i tide før exec?<br>
+          </p>
+        </details>
+        <details style="display:block">
+          <summary>Lurker Review</summary>
+          <p>
+          • Tog jeg de rigtige timings? Overskred jeg timing windows?<br>
+          • Var jeg for forudsigelig? (samme lurk 2 runder i træk).<br>
+          • Strafte jeg CT aggression korrekt?<br>
+          • Cut’ede jeg rotations når mit hold exec’ede?<br>
+          • Tog jeg space uden at over-pushe?<br>
+          </p>
+        </details>
+        <details style="display:block">
+          <summary>Team Review</summary>
+          <p>
+          • Fik vi map control før exec?<br>
+          • Brugte vi utility til at tage space sikkert?<br>
+          • Rotations: Var de for langsomme eller for tidlige?<br>
+          • Mistede vi runder til enkeltmandsfejl eller teamwork-fejl?<br>
+          • Fungerede vores defaults? (Hvis nej, hvorfor?)<br>
+          </p>
+        </details>
+      </details>
+      
+
+      <div class="extra-section"></div>
+      <details style="display: block;">
+        <summary> Matchday Protocols</summary>
+
+        <details style="display:block">
+          <summary>Pre-Match Checklist</summary>
+          <p>
+          • Review modstanderens tendens (CT aggression, T defaults).<br>
+          • Sikre at alle lineups sidder: smokes, molos, flashes.<br>
+          • Aftal hvem caller mid-round, hvem caller reactions.<br>
+          • Warmup goals: 100 kills aim + 10 min movement.<br>
+          • Snak kort: “Hvad er vores gameplan? Hvad forventer vi?”<br>
+          </p>
+        </details>
+        <details style="display:block">
+          <summary>In-Match Fokus</summary>
+          <p>
+          • Calm comms → præcis, ikke for meget snak.<br>
+          • Husk defaults før execs.<br>
+          • Lurkers må aldrig dø tidligt → timing > kills.<br>
+          • Anchors må aldrig over-pushe site → tid > kills.<br>
+          </p>
+        </details>
+        <details style="display:block">
+          <summary>Post-Match Review</summary>
+          <p>
+          • Hvilke runder tabte vi pga. timing? Pga. utility?<br>
+          • Blev vi out-rotated? Out-aimed? Out-macroed?<br>
+          • Hvilke execs virkede? Hvilke virkede ikke?<br>
+          • Hvad skal trænes næste gang?<br>
+          </p>
+        </details>
+      </details>
+      
+
+      <div class="extra-section"></div>
+      <details style="display: block;">
+        <summary> Anti-Eco / Anti-Force Planer</summary>
+        <details style="display:block">
+          <summary>T-Side</summary>
+          <p>
+          • Hold afstand – undgå close duels mod pistols.<br>
+          • Tag map control med utility før du sætter plant.<br>
+          • Brug anti-force defaults: long control, mid control, eller B splits.<br>
+          • Gå aldrig mod stack → lurker skal checke rotations.<br>
+          </p>
+        </details>
+        <details style="display:block">
+          <summary>CT-Side</summary>
+          <p>
+          • Brug ranges: spil længere angles mod pistols.<br>
+          • Rotér ikke for tidligt – stacks er almindelige i lavere divisions.<br>
+          • Hold crossfires og spil på info, ikke aggression.<br>
+          • Brug HE og molo tæt i chokes for at stoppe bumrush.
+          </p>
+        </details>
+      </details>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id){
+      // Skjul alle sektioner + extra blocks
+      document.querySelectorAll('.map-section, .extra-section').forEach(function(sec){
+        sec.style.display = 'none';
+      });
+
+      // Skjul landing/forside
+      var landing = document.getElementById('landing');
+      if (landing) {
+        landing.style.display = 'none';
+      }
+
+      // Fjern active fra alle nav links
+      document.querySelectorAll('.nav-link').forEach(function(link){
+        link.classList.remove('active');
+      });
+
+      var target = document.getElementById(id);
+      if(target){
+        // Vis valgt hovedsektion
+        target.style.display = 'block';
+
+        // Sørg for at alle details kan ses/klikkes
+        target.querySelectorAll('details').forEach(function(det){
+          det.style.display = 'block';
+        });
+
+        // Hvis Extras er valgt, vis alle nested .extra-section blocks
+        if(id === 'Extras'){
+          target.querySelectorAll('.extra-section').forEach(function(sec){
+            sec.style.display = 'block';
+          });
+        }
+      }
+
+      // Sæt active på det klikker nav-link
+      var activeLink = document.querySelector('.nav-link[data-target="' + id + '"]');
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+
+    // On load: skjul alle playbook-sektioner (men behold landing)
+    window.addEventListener('load', function(){
+      document.querySelectorAll('.map-section, .extra-section').forEach(function(sec){
+        sec.style.display = 'none';
+      });
+      var landing = document.getElementById('landing');
+      if (landing) {
+        landing.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
